@@ -38,3 +38,36 @@ def shortest_path_by_weight(graph, start, paths):
                                                     if paths[start][e][int(str(paths[start][e].keys())[1])] > paths[start][current][int(str(paths[start][current].keys())[1])] + weight(graph, current, e):
                                                             paths[start][e][int(str(paths[start][e].keys())[1])] = paths[start][current][int(str(paths[start][current].keys())[1])] + weight(graph, current, e)
     return "Your weighted graph has been created"
+    
+# the newest version of a short_path algorithm I wrote which gives the literal
+# path as a graph as well as the weighted path
+# the literal path is, of course, created from the weighted path
+    
+    def shortest_by_weight(graph, start):
+    char_graph = {}
+    weight_graph = {}
+    char_graph[start] = {}
+    weight_graph[start] = {}
+    open_list = []
+    for i in graph[start]:
+        for e in graph.keys():
+                if i in graph[e]:
+                    if e not in open_list or weight_graph[start]:
+                        open_list.append(e)
+                        weight_graph[start][e] = weight(graph, start, e)
+                        char_graph[start][e] = [start, e]
+    while len(open_list) > 0:
+        curr = open_list[0]
+        del open_list[0]
+        for i in graph[curr]:
+            for e in graph.keys():
+                if i in graph[e]:
+                    if e not in weight_graph[start]:
+                        weight_graph[start][e] = weight_graph[start][curr] + weight(graph,curr,e)
+                        char_graph[start][e] = char_graph[start][curr] + [e]
+                        open_list.append(e)
+                    elif e in weight_graph[start] and weight_graph[start][e] > weight_graph[start][curr] + weight(graph,curr,e):
+                        weight_graph[start][e] = weight_graph[start][curr] + weight(graph,curr,e)
+                        char_graph[start][e] = char_graph[start][curr] + [e]
+    return char_graph
+    
