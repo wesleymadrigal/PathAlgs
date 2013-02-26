@@ -43,7 +43,7 @@ def shortest_path_by_weight(graph, start, paths):
 # path as a graph as well as the weighted path
 # the literal path is, of course, created from the weighted path
     
-    def shortest_by_weight(graph, start):
+def shortest_by_weight(graph, start):
     char_graph = {}
     weight_graph = {}
     char_graph[start] = {}
