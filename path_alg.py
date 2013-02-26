@@ -72,3 +72,37 @@ def shortest_by_weight(graph, start):
                         char_graph[start][e] = char_graph[start][curr] + [e]
     return char_graph
     
+    
+ # and finally we have a shortest_paths by hops
+ # BREADTH FIRST algorithm
+ 
+ # shortest path by hops breadth first
+def shortest_by_hops(graph, start):
+    char_graph = {}
+    hops_graph = {}
+    char_graph[start] = {}
+    hops_graph[start] = {}
+    open_list = []
+    for i in graph[start]:
+        for e in graph.keys():
+            if i in graph[e]:
+                if e not in open_list or hops_graph[start]:
+                    open_list.append(e)
+                    hops_graph[start][e] = 1
+                    char_graph[start][e] = [start, e]
+    while len(open_list) > 0:
+        curr = open_list[0]
+        del open_list[0]
+        for i in graph[curr]:
+            for e in graph.keys():
+                if i in graph[e]:
+                    if e not in hops_graph[start]:
+                        hops_graph[start][e] = hops_graph[start][curr] + 1
+                        char_graph[start][e] = char_graph[start][curr] + [e]
+                        open_list.append(e)
+                    elif e in hops_graph[start]:
+                        if hops_graph[start][e] > hops_graph[start][curr] + 1:
+                            hops_graph[start][e] = hops_graph[start][curr] + 1
+                            char_graph[start][e] = char_graph[start][curr] + [e]
+    return char_graph
+ 
